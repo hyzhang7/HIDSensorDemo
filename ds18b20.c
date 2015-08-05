@@ -1,9 +1,8 @@
 /*
 A simple implementation of DS18B20 temperature sensor. 
 This driver uses one GPIO to communicate with sensor through 1-wire protocol,
-NOTE: please adjust the pin-assignment in DS18B20_Reset()/DS18B20_ReadBit()/DS18B20_WriteBit() functions.
-                                                                       hyzhang7
-                                                                       2008
+please adjust the pin-assignment in DS18B20_Reset()/DS18B20_ReadBit()/DS18B20_WriteBit()
+Hyzhang7, 2008
 */
 
 #include<avr/io.h>
@@ -103,13 +102,11 @@ bool DS18B20_Init()
 	return 0;
 }
 
-int DS18B20_GetTmperatureWithoutAddress()
+unsigned int DS18B20_GetTmperatureWithoutAddress()
 {
 	unsigned char th=0;
 	unsigned char tl=0;
-	unsigned int tmp2;
-	int tmp=0;
-	bool neg=0;
+	unsigned int tmp;
 	DS18B20_Reset();
 	DS18B20_WriteByte(0xCC);  //SKIP ROM
 	DS18B20_WriteByte(0x44);
@@ -119,20 +116,8 @@ int DS18B20_GetTmperatureWithoutAddress()
 	DS18B20_WriteByte(0xBE);
 	tl=DS18B20_ReadByte();
 	th=DS18B20_ReadByte();
-	tmp2=(tl)+(((unsigned int)th)<<8);
-	if(tmp2&0x8000)
-	{
-		tmp2=~tmp2;
-		tmp2++;
-		neg=1;
-	}
-	else
-	{
-		neg=0;
-	}
-	tmp=((tmp2&0xfff0)>>4);
-	if (neg)
-		tmp=0-tmp;
+	tmp=(tl)+(((unsigned int)th)<<8);
+	
 	return tmp;
 }
 
@@ -151,7 +136,7 @@ void DS18B20_GetDeviceID(unsigned char * dat)
 
 
 }
-unsigned int DS18B20_GetTemperatureAndConvert()
+unsigned int DS18B20_GetTemperatureNonBlocking()
 {
 	unsigned char th=0;
 	unsigned char tl=0;
