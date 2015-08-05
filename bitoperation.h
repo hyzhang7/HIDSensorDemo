@@ -8,6 +8,8 @@ This header provides the Macros for convenient bit operations (set/clr) of GPIO 
 #define __BIT_OPT_GENERAL__
 #define SETB_P(port,pin)  SETB_P ## port(pin)
 #define CLR_P(port,pin)  CLR_P ## port(pin)
+#define OUT_P(port,pin)   DDR ## port |=(1<<pin)
+#define IN_P(port,pin)    DDR ## port &=~(1<<pin)
 #endif
 
 #ifndef __BIT_OPT_PD__
