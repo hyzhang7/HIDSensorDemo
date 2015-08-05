@@ -4,8 +4,14 @@ This header provides the Macros for convenient bit operations (set/clr) of GPIO 
                                                               hyzhang7
                                                               2010
 */
+#ifndef __BIT_OPT_GENERAL__
+#define __BIT_OPT_GENERAL__
+#define SETB_P(port,pin)  SETB_P ## port(pin)
+#define CLR_P(port,pin)  CLR_P ## port(pin)
+#endif
+
 #ifndef __BIT_OPT_PD__
-#define __BIT_OPT_PD__ 1
+#define __BIT_OPT_PD__ 
 #define  SETB_PD(x)  PORTD|=(1<<(x))
 #define  CLR_PD(x)   PORTD&=~(1<<(x))
 #endif
