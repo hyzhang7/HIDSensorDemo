@@ -17,5 +17,8 @@ Major Hardware Components:
 5. LEDs (Optional, only for display status)
 5. Resistors/Capacitors
 
-
+MCU Fuse Settings:
+Hfuse = 0xE0
+Lfuse = 0xD9
+Efuse = 0xFF
 
